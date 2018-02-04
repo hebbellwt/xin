@@ -7,36 +7,9 @@
 #include <fcntl.h>
 #include <pthread.h>  
 
+#include "def.h"  
+#include "var.h"  
 
-#define CLOCKID CLOCK_REALTIME 
-
-typedef struct tagCoffee
-{
-	char *size;
-	int price;
-} Coffee;
-
-typedef enum tagVmState
-{
-	VM_IDLE = 0,
-	VM_SIZE_SELECT,
-	VM_OFF
-} VmState;
-
-typedef struct tagVendingMachine
-{
-	VmState state;
-	int temperature;
-	int price;
-	int coin_sum;
-	timer_t coin_insert_timerid;
-} VendingMachine;
-
-Coffee coffees[] = {
-		{"small", 50},
-		{"medium", 100},
-		{"big", 150}
-};
 
 void vm_clear_stdin()
 {
@@ -209,6 +182,8 @@ void* pthread_func_temp_control (void* input)
 		}
 		sleep(5);
 	}
+
+	return 0;
 }
 
 
@@ -220,6 +195,7 @@ void* pthread_func_input (void* input)
 		vm_clear_stdin();
 		sleep(1);
 	}
+	return 0;
 }
 
 int main(int argc, const char* argv[])
@@ -254,5 +230,6 @@ int main(int argc, const char* argv[])
 			}
 			keyboard_input[0] = 0;
 		}
-	}		
+	}	
+	return 0;
 }
